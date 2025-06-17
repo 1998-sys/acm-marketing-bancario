@@ -51,7 +51,7 @@ def analise_univariada(data, variavel):
     cores = [cmap(n) for n in norm]
     cores_hex = [rgb2hex(c[:3]) for c in cores]
 
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(7,5))
     ax = sns.barplot(x=variavel, y='Frequency', data=tabela_frequencia, palette=cores_hex)
     for spine in ['top', 'right', 'left', 'bottom']:
         ax.spines[spine].set_visible(False)
