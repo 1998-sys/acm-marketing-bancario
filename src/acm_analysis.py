@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import prince
 from itertools import combinations
 from IPython.display import display
+import seaborn as sns
 
 
 
@@ -25,4 +26,42 @@ def chi2(df):
         print(f'p-valor da estatística: {round(pvalor,4)}')
         print(f'Graus de liberdade: {gl}', '\n')
 
+
+def mca(df, components=2):
+    """"
+    Realiza A Análise de Correspondência Múltipla (MCA) em um Dataframe e plota o resultados.
+    :param df: Dataframe contendo as variáveis categóricas
+    :param components: Número de dimensões a serem consideradas na MCA (padrão 2)
+    :return: coord_padrao: coordenadas padrão cálculadas
+    :return: coord_obs: coordenadas da observação calculadas
+    """
+    mca = prince.MCA(n_components=components).fit(df)
+    qtd_dimensoes = mca.J_ - mca.K_
+    tabela_autovalores = mca.eigenvalues_summary
+
+    print(f'Número de dimensões: {qtd_dimensoes}')
+    print(f'Quantidade de Variáveis: {mca.K_}')
+    print(f'Quantidade Total de Categorias: {mca.J_}')
+
+    print(tabela_autovalores)
+
+    print(mca.total_inertia_)
+
+    coord_padrao = mca.column_coordinates(df)/np.sqrt(mca.eigenvalues_)
+
+    coord_obs = mca.row_coordinates(df)
+
+    return coord_padrao, coord_obs, tabela_autovalores
+
+
+
+
+
+
+    
+
+    
+
+
+    
 

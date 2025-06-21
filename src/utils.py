@@ -78,7 +78,59 @@ def analise_univariada(data, variavel):
     ax.set_ylabel('')
     plt.show()
 
-#analise_univariada(df, 'education')
+def label_point(x, y, val, ax):
+    """
+    Função que plota o nome das categorias no gráfico
+    """
+    a = pd.concat({'x': x, 'y': y, 'val': val}, axis=1)
+    for i, point in a.iterrows():
+        ax.text(point['x'] + 0.03, point['y'] - 0.02, point['val'], fontsize=5)
+
+
+def mapa_percptual(data,coord, tabela_autovalores):
+    """
+     Função que plota o mapa perceptual das categorias
+     :param data: dataframe de dados
+     :param coord: coordenadas padrão
+     :param tabela_autovalores: tabela_autovalores
+     :return: None
+
+     Plota o gráfico de mapa perceptual das variáveis
+    """
+    chart= coord.reset_index()
+
+    nome_categ=[]
+    for col in data:
+        nome_categ.append(data[col].sort_values(ascending=True).unique())
+        categorias = pd.DataFrame(nome_categ).stack().reset_index()
+
+    var_chart = pd.Series(chart['index'].str.split('-', expand=True).iloc[:,0])
+
+    chart_df_mca = pd.DataFrame(
+        {
+        'categoria': chart['index'],
+        'obs_x': chart[0],
+        'obs_y': chart[1],
+        'variavel': var_chart,
+        'categoria_id': categorias[0]
+            })
+    
+
+    label_point(x = chart_df_mca['obs_x'],
+            y = chart_df_mca['obs_y'],
+            val = chart_df_mca['categoria_id'],
+            ax = plt.gca())
+    
+    sns.scatterplot(data=chart_df_mca, x='obs_x', y='obs_y', hue='variavel', s=20)
+    sns.despine(top=True, right=True, left=False, bottom=False)
+    plt.axhline(y=0, color='lightgrey', ls='--', linewidth=0.8)
+    plt.axvline(x=0, color='lightgrey', ls='--', linewidth=0.8)
+    plt.tick_params(size=2, labelsize=6)
+    plt.legend(bbox_to_anchor=(1.25,-0.2), fancybox=True, shadow=True, ncols=10, fontsize='5')
+    plt.title("Mapa Perceptual - MCA", fontsize=12)
+    plt.xlabel(f"Dim. 1: {tabela_autovalores.iloc[0,1]} da inércia", fontsize=8)
+    plt.ylabel(f"Dim. 2: {tabela_autovalores.iloc[1,1]} da inércia", fontsize=8)
+    plt.show()
 
 
 
