@@ -128,7 +128,7 @@ def mapa_percptual(data,coord, tabela_autovalores):
     plt.axhline(y=0, color='lightgrey', ls='--', linewidth=1)
     plt.axvline(x=0, color='lightgrey', ls='--', linewidth=1)
     plt.tick_params(size=2, labelsize=6)
-    plt.legend(bbox_to_anchor=(1.25,-0.2), fancybox=True, shadow=True, ncols=10, fontsize='5')
+    plt.legend(bbox_to_anchor=(1.25,-0.2), fancybox=True, shadow=True, ncols=10, fontsize='8')
     plt.title("Mapa Perceptual - MCA", fontsize=12)
     plt.xlabel(f"Dim. 1: {tabela_autovalores.iloc[0,1]} da inércia", fontsize=10)
     plt.ylabel(f"Dim. 2: {tabela_autovalores.iloc[1,1]} da inércia", fontsize=10)
