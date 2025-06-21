@@ -115,21 +115,23 @@ def mapa_percptual(data,coord, tabela_autovalores):
         'categoria_id': categorias[0]
             })
     
+    plt.figure(figsize=(14,8))
+    ax = plt.gca()
 
     label_point(x = chart_df_mca['obs_x'],
             y = chart_df_mca['obs_y'],
             val = chart_df_mca['categoria_id'],
             ax = plt.gca())
     
-    sns.scatterplot(data=chart_df_mca, x='obs_x', y='obs_y', hue='variavel', s=20)
+    sns.scatterplot(data=chart_df_mca, x='obs_x', y='obs_y', hue='variavel', s=40, ax=ax)
     sns.despine(top=True, right=True, left=False, bottom=False)
-    plt.axhline(y=0, color='lightgrey', ls='--', linewidth=0.8)
-    plt.axvline(x=0, color='lightgrey', ls='--', linewidth=0.8)
+    plt.axhline(y=0, color='lightgrey', ls='--', linewidth=1)
+    plt.axvline(x=0, color='lightgrey', ls='--', linewidth=1)
     plt.tick_params(size=2, labelsize=6)
     plt.legend(bbox_to_anchor=(1.25,-0.2), fancybox=True, shadow=True, ncols=10, fontsize='5')
     plt.title("Mapa Perceptual - MCA", fontsize=12)
-    plt.xlabel(f"Dim. 1: {tabela_autovalores.iloc[0,1]} da inércia", fontsize=8)
-    plt.ylabel(f"Dim. 2: {tabela_autovalores.iloc[1,1]} da inércia", fontsize=8)
+    plt.xlabel(f"Dim. 1: {tabela_autovalores.iloc[0,1]} da inércia", fontsize=10)
+    plt.ylabel(f"Dim. 2: {tabela_autovalores.iloc[1,1]} da inércia", fontsize=10)
     plt.show()
 
 
